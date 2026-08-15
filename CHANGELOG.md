@@ -2,6 +2,11 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.1] - 2026-08-15
+
+### Fixed
+- SEO: translated pages now emit a self-referencing canonical URL and `og:url`, so search engines index the translated variant instead of canonicalizing it back to the source language. This makes non-source languages indexable and rankable.
+
 ## [1.1.0] - 2026-08-15
 
 ### Added

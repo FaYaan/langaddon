@@ -135,6 +135,12 @@ class Langaddon_Frontend {
 			if ( isset( $map[ $key ] ) ) { $n->nodeValue = $map[ $key ]; }
 		}
 
+		// SEO: point the translated page's canonical (and og:url) at itself, so search
+		// engines index this language variant instead of folding it back to the source URL.
+		foreach ( $xpath->query( '//link[@rel="canonical"]/@href | //meta[@property="og:url"]/@content' ) as $c ) {
+			$c->nodeValue = add_query_arg( 'lang', $lang, $c->nodeValue );
+		}
+
 		$out = $dom->saveHTML();
 		$out = preg_replace( '/^<\?xml encoding="utf-8" \?>/', '', $out );
 		return $out ? $out : $html;

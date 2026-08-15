@@ -58,7 +58,7 @@ Turn on **Keep prices untranslated** to leave any text containing a currency amo
 
 ## Routing & SEO
 
-v1 routes with `?lang=xx` + a cookie, and outputs `hreflang` alternates so search engines can discover each language. Pretty `/de/` sub-directory URLs (stronger SEO) are on the roadmap.
+Translation is done server-side (the finished HTML is rewritten in PHP), so crawlers get fully translated pages, not JavaScript-injected text. Each variant routes with `?lang=xx` plus a cookie, outputs `hreflang` alternates, and is **self-canonical** (its `canonical` and `og:url` point at the translated URL), so search engines index each language rather than folding it back into the source. Pretty `/de/` sub-directory URLs, the pattern Google prefers, are the next SEO step on the roadmap.
 
 ## Roadmap
 

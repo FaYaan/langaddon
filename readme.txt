@@ -2,9 +2,9 @@
 Contributors: hostaddon
 Tags: translation, multilingual, translate, language switcher, hreflang, rtl, localization
 Requires at least: 5.6
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ Depending on your choice, text is sent to one of these services:
 * DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
+= 1.1.1 =
+* SEO: translated pages now set a self-referencing canonical (and og:url) so search engines index each language instead of folding it back to the source URL.
+
 = 1.1.0 =
 * New: "Never translate" list to keep chosen words and phrases identical in every language, even inside sentences.
 * New: optional price guard that leaves any text containing a currency amount untranslated.
