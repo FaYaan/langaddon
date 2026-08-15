@@ -2,7 +2,7 @@
 Contributors: hostaddon
 Tags: translation, multilingual, translate, language switcher, hreflang, rtl, localization
 Requires at least: 5.6
-Tested up to: 6.6
+Tested up to: 6.9
 Requires PHP: 7.2
 Stable tag: 1.1.0
 License: GPL-2.0-or-later
@@ -45,6 +45,17 @@ It outputs hreflang tags and translates titles/meta descriptions. Pretty sub-dir
 
 = Can I edit a translation? =
 Yes, cached translations are stored in your database and can be edited (a front-end editor is on the roadmap).
+
+== External services ==
+
+To translate text, LangAddon sends the strings on the page being viewed to the translation backend you select in Settings → LangAddon. Nothing is sent until you choose a backend and a target language, and results are cached in your own database so each string is sent only once. No data is sent to HostAddon.
+
+Depending on your choice, text is sent to one of these services:
+
+* MyMemory (default): sends the text to be translated, plus your email only if you add one to raise the free limit. Service by Translated. Docs and terms: https://mymemory.translated.net/doc/ , privacy: https://translated.com/privacy-policy/
+* LibreTranslate (optional): sends the text to the LibreTranslate server URL you configure, which may be your own self-hosted server or a public one. Project: https://libretranslate.com/ . Terms and privacy depend on the server you point to; self-hosting keeps all text on your own infrastructure.
+* Google Cloud Translation (optional): sends the text and your API key to Google. Terms: https://cloud.google.com/terms/ , privacy: https://policies.google.com/privacy
+* DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
 = 1.1.0 =
