@@ -1,0 +1,18 @@
+/* LangAddon switcher styles (brand-neutral; override freely in your theme). */
+.langaddon-switcher{display:inline-block;font-size:14px;line-height:1.2;}
+.langaddon-switcher--dropdown select{
+	font:inherit;padding:6px 28px 6px 10px;border:1px solid #d8dbe6;border-radius:8px;
+	background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23667' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+	color:#333;cursor:pointer;-webkit-appearance:none;appearance:none;
+}
+.langaddon-switcher--inline{list-style:none;display:flex;flex-wrap:wrap;gap:6px 10px;margin:0;padding:0;}
+.langaddon-switcher--inline li{margin:0;}
+.langaddon-switcher--inline a{text-decoration:none;color:inherit;opacity:.75;}
+.langaddon-switcher--inline a:hover{opacity:1;}
+.langaddon-switcher--inline .is-active a{opacity:1;font-weight:700;}
+
+/* Floating switcher */
+.langaddon-float{position:fixed;z-index:9999;bottom:18px;inset-inline-end:18px;
+	background:#fff;border:1px solid #e3e6f0;border-radius:10px;padding:6px 8px;
+	box-shadow:0 8px 24px -10px rgba(20,25,60,.35);}
+[dir="rtl"] .langaddon-float{inset-inline-end:auto;inset-inline-start:18px;}

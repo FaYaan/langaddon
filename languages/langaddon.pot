@@ -1,0 +1,12 @@
+# LangAddon: translation template for the plugin's own admin/UI strings.
+msgid ""
+msgstr ""
+"Project-Id-Version: LangAddon 1.0.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"X-Domain: langaddon\n"
+
+msgid "Choose language"
+msgstr ""
+
+msgid "LangAddon"
+msgstr ""
