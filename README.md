@@ -2,7 +2,7 @@
 
 Make any WordPress site multilingual **for free**. LangAddon machine-translates your pages into 40+ languages using **free, no-lock-in backends** (MyMemory or a self-hosted LibreTranslate, or your own Google/DeepL key), **caches every translation in your own database**, and lets you **edit any string**. Ships with a language switcher, right-to-left support and `hreflang` tags.
 
-Built and open-sourced by [HostAddon](https://www.hostaddon.com) as part of a set of free tools for startups and small teams. MIT-spirited, GPL-licensed, no subscription.
+Built and open-sourced by [HostAddon](https://www.hostaddon.com), and free for anyone to use, fork, and build on. GPL-licensed, no subscription, no lock-in.
 
 ## Why
 
@@ -14,6 +14,7 @@ Most WordPress translation plugins are either paid (TranslatePress, WPML, Weglot
 - 🆓 **No paid API required**: defaults to MyMemory (no key). Optional LibreTranslate (self-host), Google or DeepL.
 - 💾 **Self-hosted cache**: each string is translated once and stored in your DB; repeat views are instant.
 - ✍️ **Editable**: every cached translation lives in your database (a front-end editor is on the roadmap; for now edit rows directly or via the filter).
+- 🛑 **Never-translate list**: keep brand names, product names, domain extensions, and code identical in every language, even mid-sentence. Optional price guard leaves any text with a currency amount (`$`, `€`, `£`, `₿`) untouched.
 - 🔀 **Language switcher**: shortcode `[langaddon_switcher]`, a floating widget, or your theme's switcher slot.
 - 🔎 **SEO basics**: `hreflang` alternate tags and translated `<title>` / meta description.
 - ↔️ **RTL aware**: sets `dir="rtl"` and language attributes automatically.
@@ -26,11 +27,25 @@ Most WordPress translation plugins are either paid (TranslatePress, WPML, Weglot
 3. **Settings → LangAddon**: choose your source language, tick the languages to translate into, pick a backend, save.
 4. Add the switcher: drop `[langaddon_switcher]` into a menu/widget/template, or enable the floating switcher.
 
+## Screenshots
+
+Placeholder references; add real images at these paths before a release.
+
+1. Settings → LangAddon: languages and backend. `docs/screenshot-1.png`
+2. The Never-translate list and price guard. `docs/screenshot-2.png`
+3. Front-end language switcher. `docs/screenshot-3.png`
+
 ## How it works
 
 On a non-default language, LangAddon buffers the rendered HTML, walks the visible text nodes (skipping `<script>`, `<style>`, `<code>`, and anything marked `class="notranslate"` or `translate="no"`), translates the unique strings via your chosen backend, **caches them**, and writes them back, preserving all your markup. Cached strings never hit the API again.
 
 The first visit to a page in a new language translates a batch of strings (configurable, default 40) and fills the rest on subsequent views, so no single request times out. Point it at a self-hosted LibreTranslate for fast bulk translation.
+
+## Never translate
+
+Some words should read the same in every language: brand names, product names, domain extensions like `.org`, code, and so on. Under **Settings → LangAddon → Never translate**, add one word or phrase per line. LangAddon keeps them exactly as written wherever they appear, even in the middle of a sentence, by shielding them before the text goes to the backend and restoring them afterward.
+
+Turn on **Keep prices untranslated** to leave any text containing a currency amount (`$`, `€`, `£`, `₿`) alone, so "Only $49" never turns into "Only 49 €". You can also mark any element in your theme with `class="notranslate"` or `translate="no"` to skip it; the list and the markup work together.
 
 ## Backends
 
@@ -52,7 +67,7 @@ v1 routes with `?lang=xx` + a cookie, and outputs `hreflang` alternates so searc
 - [ ] "Warm" tool to pre-translate all pages from the admin
 - [ ] WP-CLI command for bulk translation
 - [ ] Per-post translate/exclude controls
-- [ ] Glossary / do-not-translate list
+- [x] Glossary / do-not-translate list (shipped in v1.1.0)
 
 PRs welcome. See `CONTRIBUTING` once opened.
 
