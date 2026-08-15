@@ -126,8 +126,8 @@ class Langaddon_Translator {
 		$table = self::table();
 		$in    = implode( ',', array_fill( 0, count( $hashes ), '%s' ) );
 		$params = array_merge( array( $lang ), $hashes );
-		$sql   = $wpdb->prepare( "SELECT hash, translation FROM $table WHERE lang = %s AND hash IN ($in)", $params );
-		$rows  = $wpdb->get_results( $sql, ARRAY_A );
+		$sql   = $wpdb->prepare( 'SELECT hash, translation FROM `' . esc_sql( $table ) . "` WHERE lang = %s AND hash IN ($in)", $params ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared
+		$rows  = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$out   = array();
 		foreach ( (array) $rows as $r ) { $out[ $r['hash'] ] = $r['translation']; }
 		return $out;
@@ -135,7 +135,7 @@ class Langaddon_Translator {
 
 	public static function store( $lang, $hash, $source, $translation, $edited = 0 ) {
 		global $wpdb;
-		$wpdb->replace( self::table(), array(
+		$wpdb->replace( self::table(), array( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			'lang'        => $lang,
 			'hash'        => $hash,
 			'source'      => $source,

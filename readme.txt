@@ -1,14 +1,14 @@
 === LangAddon: Free Website Translation ===
 Contributors: hostaddon
-Tags: translation, multilingual, translate, language switcher, hreflang, rtl, localization
+Tags: translation, multilingual, translate, language switcher, hreflang
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Free, self-hosted multilingual for WordPress. Machine-translate your site into 40+ languages, cache the results in your own database, and edit any translation.
+Free, self-hosted multilingual for WordPress: translate your site into 40+ languages, cache them in your database, and edit any translation.
 
 == Description ==
 
@@ -58,6 +58,9 @@ Depending on your choice, text is sent to one of these services:
 * DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
+= 1.1.3 =
+* Hardening for the WordPress.org review: escaped all settings-screen output, guarded the database calls on the plugin's own cache table, sanitized the language query variable earlier, and dropped the deprecated text-domain loader. No functional changes.
+
 = 1.1.2 =
 * SEO: the page title and meta description (and Open Graph title/description) now translate on the first view of a page, instead of waiting behind the per-page translation budget.
 

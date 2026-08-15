@@ -44,8 +44,8 @@ class Langaddon_Frontend {
 		$source  = $this->settings['source'];
 		$allowed = array_merge( array( $source ), $this->targets() );
 		// 1) explicit ?lang= (and remember it)
-		if ( isset( $_GET['lang'] ) ) {
-			$l = sanitize_key( str_replace( '_', '-', wp_unslash( $_GET['lang'] ) ) );
+		if ( isset( $_GET['lang'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- ?lang= is a read-only navigation preference, no form submitted.
+			$l = str_replace( '_', '-', sanitize_key( wp_unslash( $_GET['lang'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- ?lang= is a read-only navigation preference.
 			if ( in_array( $l, $allowed, true ) ) {
 				if ( ! headers_sent() ) {
 					setcookie( 'langaddon_lang', $l, time() + YEAR_IN_SECONDS, defined( 'COOKIEPATH' ) ? COOKIEPATH : '/' );
@@ -199,8 +199,8 @@ class Langaddon_Frontend {
 			echo '<ul class="langaddon-switcher langaddon-switcher--inline notranslate">';
 			foreach ( $langs as $l ) {
 				$url = ( $l === $source ) ? remove_query_arg( 'lang', $base ) : add_query_arg( 'lang', $l, $base );
-				$cls = ( $l === $this->current ) ? ' class="is-active"' : '';
-				printf( '<li%s><a href="%s" hreflang="%s">%s</a></li>', $cls, esc_url( $url ), esc_attr( $l ), esc_html( Langaddon_Languages::name( $l ) ) );
+				$cls = ( $l === $this->current ) ? 'is-active' : '';
+				printf( '<li class="%s"><a href="%s" hreflang="%s">%s</a></li>', esc_attr( $cls ), esc_url( $url ), esc_attr( $l ), esc_html( Langaddon_Languages::name( $l ) ) );
 			}
 			echo '</ul>';
 		} else {
@@ -208,8 +208,8 @@ class Langaddon_Frontend {
 			echo '<select onchange="if(this.value)window.location.href=this.value;" aria-label="' . esc_attr__( 'Choose language', 'langaddon' ) . '">';
 			foreach ( $langs as $l ) {
 				$url = ( $l === $source ) ? remove_query_arg( 'lang', $base ) : add_query_arg( 'lang', $l, $base );
-				$sel = selected( $l, $this->current, false );
-				printf( '<option value="%s"%s>%s</option>', esc_url( $url ), $sel, esc_html( Langaddon_Languages::name( $l ) ) );
+				// selected() is emitted inline in the option below.
+				echo '<option value="' . esc_url( $url ) . '"' . selected( $l, $this->current, false ) . '>' . esc_html( Langaddon_Languages::name( $l ) ) . '</option>';
 			}
 			echo '</select></div>';
 		}
@@ -217,7 +217,7 @@ class Langaddon_Frontend {
 	}
 
 	public function float_switcher() {
-		echo '<div class="langaddon-float">' . $this->render_switcher( $this->settings['switcher'] ) . '</div>';
+		echo '<div class="langaddon-float">' . $this->render_switcher( $this->settings['switcher'] ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_switcher() returns markup already escaped internally.
 	}
 
 	/* ---------------- assets ---------------- */

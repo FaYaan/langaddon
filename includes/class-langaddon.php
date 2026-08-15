@@ -14,7 +14,7 @@ class Langaddon {
 	}
 
 	private function __construct() {
-		load_plugin_textdomain( 'langaddon', false, dirname( plugin_basename( LANGADDON_FILE ) ) . '/languages' );
+		// Translations load automatically since WordPress 4.6; no load_plugin_textdomain() call is needed.
 		if ( is_admin() ) {
 			new Langaddon_Admin();
 		}

@@ -2,6 +2,11 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.3] - 2026-08-15
+
+### Changed
+- Coding-standards hardening for the WordPress.org plugin review: escaped all admin settings-screen output, guarded and prepared the database calls on the plugin's cache table, sanitized the `lang` query variable before use, removed the deprecated `load_plugin_textdomain()` call (WordPress auto-loads translations since 4.6), and trimmed the readme tags and short description. No functional changes.
+
 ## [1.1.2] - 2026-08-15
 
 ### Fixed
