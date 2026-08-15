@@ -2,6 +2,11 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.2] - 2026-08-15
+
+### Fixed
+- SEO strings (the page title, meta description, and Open Graph title/description) now get a dedicated translation pass on the first view, independent of the per-page string budget. Previously they queued behind body text and could take many views to translate on content-heavy pages.
+
 ## [1.1.1] - 2026-08-15
 
 ### Fixed

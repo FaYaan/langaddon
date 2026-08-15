@@ -100,39 +100,53 @@ class Langaddon_Frontend {
 		foreach ( array( '//img/@alt', '//input/@placeholder', '//textarea/@placeholder', '//*[@aria-label]/@aria-label', '//a/@title', '//input[@type="submit"]/@value' ) as $q ) {
 			foreach ( $xpath->query( $q ) as $a ) { $attr_nodes[] = $a; }
 		}
+
+		// Head SEO strings (title + meta/OG). Kept separate so they are always translated on the
+		// first view, independent of the per-page budget that paces the body text below.
+		$head_nodes = array();
 		if ( ! empty( $this->settings['cache_head'] ) ) {
-			foreach ( $xpath->query( '//title/text()' ) as $a ) { $attr_nodes[] = $a; }
-			foreach ( $xpath->query( '//meta[@name="description"]/@content | //meta[@property="og:description"]/@content | //meta[@property="og:title"]/@content' ) as $a ) { $attr_nodes[] = $a; }
+			foreach ( $xpath->query( '//title/text()' ) as $a ) { $head_nodes[] = $a; }
+			foreach ( $xpath->query( '//meta[@name="description"]/@content | //meta[@property="og:description"]/@content | //meta[@property="og:title"]/@content' ) as $a ) { $head_nodes[] = $a; }
 		}
 
-		// Build the unique set of source strings.
-		$uniq = array();
-		$targets = array();
-		$collect = function( $value ) use ( &$uniq ) {
+		// Normalise a node value to its lookup key (collapsed whitespace, must contain a letter).
+		$key_of = function( $value ) {
 			$t = trim( preg_replace( '/\s+/u', ' ', $value ) );
-			if ( $t === '' || mb_strlen( $t ) > 4000 ) { return null; }
-			if ( ! preg_match( '/\p{L}/u', $t ) ) { return null; } // must contain a letter
-			$uniq[ $t ] = true;
+			if ( $t === '' || mb_strlen( $t ) > 4000 ) { return ''; }
+			if ( ! preg_match( '/\p{L}/u', $t ) ) { return ''; } // must contain a letter
 			return $t;
 		};
-		foreach ( $text_nodes as $n ) { $collect( $n->nodeValue ); }
-		foreach ( $attr_nodes as $n ) { $collect( $n->nodeValue ); }
-		if ( empty( $uniq ) ) { return $html; }
 
-		$map = Langaddon_Translator::translate_batch( array_keys( $uniq ), $lang, (int) $this->settings['per_request'] );
+		// Body strings fill in up to the per-page cap; head strings always translate in full.
+		$body_uniq = array();
+		foreach ( $text_nodes as $n ) { $k = $key_of( $n->nodeValue ); if ( $k !== '' ) { $body_uniq[ $k ] = true; } }
+		foreach ( $attr_nodes as $n ) { $k = $key_of( $n->nodeValue ); if ( $k !== '' ) { $body_uniq[ $k ] = true; } }
+		$head_uniq = array();
+		foreach ( $head_nodes as $n ) { $k = $key_of( $n->nodeValue ); if ( $k !== '' ) { $head_uniq[ $k ] = true; } }
+		if ( empty( $body_uniq ) && empty( $head_uniq ) ) { return $html; }
+
+		$map = array();
+		if ( ! empty( $head_uniq ) ) {
+			$hk  = array_keys( $head_uniq );
+			$map = Langaddon_Translator::translate_batch( $hk, $lang, count( $hk ) );
+		}
+		if ( ! empty( $body_uniq ) ) {
+			$body_map = Langaddon_Translator::translate_batch( array_keys( $body_uniq ), $lang, (int) $this->settings['per_request'] );
+			$map = $map + $body_map; // union; head translations win on any overlap
+		}
 
 		// Write translations back, preserving surrounding whitespace.
 		foreach ( $text_nodes as $n ) {
 			$orig = $n->nodeValue;
-			$key  = trim( preg_replace( '/\s+/u', ' ', $orig ) );
+			$key  = $key_of( $orig );
 			if ( $key === '' || ! isset( $map[ $key ] ) ) { continue; }
 			$lead  = preg_match( '/^\s+/u', $orig, $m1 ) ? $m1[0] : '';
 			$trail = preg_match( '/\s+$/u', $orig, $m2 ) ? $m2[0] : '';
 			$n->nodeValue = $lead . $map[ $key ] . $trail;
 		}
-		foreach ( $attr_nodes as $n ) {
-			$key = trim( preg_replace( '/\s+/u', ' ', $n->nodeValue ) );
-			if ( isset( $map[ $key ] ) ) { $n->nodeValue = $map[ $key ]; }
+		foreach ( array_merge( $attr_nodes, $head_nodes ) as $n ) {
+			$key = $key_of( $n->nodeValue );
+			if ( $key !== '' && isset( $map[ $key ] ) ) { $n->nodeValue = $map[ $key ]; }
 		}
 
 		// SEO: point the translated page's canonical (and og:url) at itself, so search

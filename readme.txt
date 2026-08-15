@@ -4,7 +4,7 @@ Tags: translation, multilingual, translate, language switcher, hreflang, rtl, lo
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ Depending on your choice, text is sent to one of these services:
 * DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
+= 1.1.2 =
+* SEO: the page title and meta description (and Open Graph title/description) now translate on the first view of a page, instead of waiting behind the per-page translation budget.
+
 = 1.1.1 =
 * SEO: translated pages now set a self-referencing canonical (and og:url) so search engines index each language instead of folding it back to the source URL.
 
