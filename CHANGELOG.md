@@ -2,6 +2,11 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.4] - 2026-08-15
+
+### Added
+- Screenshots section in the readme for the WordPress.org listing. No code changes.
+
 ## [1.1.3] - 2026-08-15
 
 ### Changed

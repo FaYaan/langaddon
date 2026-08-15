@@ -29,11 +29,17 @@ Most WordPress translation plugins are either paid (TranslatePress, WPML, Weglot
 
 ## Screenshots
 
-Placeholder references; add real images at these paths before a release.
+The front-end language switcher, with the page served fully translated (here in German). Brand names, domains, and prices stay exactly as written.
 
-1. Settings → LangAddon: languages and backend. `docs/screenshot-1.png`
-2. The Never-translate list and price guard. `docs/screenshot-2.png`
-3. Front-end language switcher. `docs/screenshot-3.png`
+![Language switcher on the front end](docs/screenshot-1.png)
+
+Settings: source language, the languages to translate into, and the translation backend.
+
+![LangAddon settings](docs/screenshot-2.png)
+
+The Never-translate list, the price guard, and the per-page translation control.
+
+![Never-translate settings](docs/screenshot-3.png)
 
 ## How it works
 

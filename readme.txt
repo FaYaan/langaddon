@@ -4,7 +4,7 @@ Tags: translation, multilingual, translate, language switcher, hreflang
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,12 @@ No subscription. No third-party lock-in. Your translations stay in your database
 3. Go to Settings → LangAddon, choose your languages and a backend, and save.
 4. Add `[langaddon_switcher]` where you want the switcher, or enable the floating switcher.
 
+== Screenshots ==
+
+1. The language switcher on the front end. Pages are served fully translated (shown here in German), with brand names, domains, and prices left exactly as written.
+2. Settings: pick your source language, the languages to translate into, and a translation backend (MyMemory, LibreTranslate, Google, or DeepL).
+3. The Never-translate list and the price guard, plus the per-page translation control.
+
 == Frequently Asked Questions ==
 
 = Is it really free? =
@@ -58,6 +64,9 @@ Depending on your choice, text is sent to one of these services:
 * DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
+= 1.1.4 =
+* Added a Screenshots section to the readme. No code changes.
+
 = 1.1.3 =
 * Hardening for the WordPress.org review: escaped all settings-screen output, guarded the database calls on the plugin's own cache table, sanitized the language query variable earlier, and dropped the deprecated text-domain loader. No functional changes.
 
