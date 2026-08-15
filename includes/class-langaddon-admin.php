@@ -41,6 +41,8 @@ class Langaddon_Admin {
 		$out['switcher']       = in_array( $in['switcher'] ?? '', array( 'dropdown', 'inline' ), true ) ? $in['switcher'] : 'dropdown';
 		$out['float']          = empty( $in['float'] ) ? 0 : 1;
 		$out['cache_head']     = empty( $in['cache_head'] ) ? 0 : 1;
+		$out['protect_terms']  = isset( $in['protect_terms'] ) ? sanitize_textarea_field( $in['protect_terms'] ) : '';
+		$out['protect_prices'] = empty( $in['protect_prices'] ) ? 0 : 1;
 		return $out;
 	}
 
@@ -113,6 +115,12 @@ class Langaddon_Admin {
 							<option value="inline"<?php selected( 'inline', $s['switcher'] ); ?>>Inline list</option>
 						</select>
 						<label style="margin-left:14px;"><input type="checkbox" name="<?php echo $o; ?>[float]" value="1"<?php checked( 1, $s['float'] ); ?>> Show floating switcher (bottom corner)</label>
+					</td></tr>
+
+					<tr><th scope="row">Never translate</th><td>
+						<textarea name="<?php echo $o; ?>[protect_terms]" rows="4" class="large-text code" placeholder="HostAddon&#10;cPanel&#10;.org&#10;.com"><?php echo esc_textarea( $s['protect_terms'] ); ?></textarea>
+						<p class="description">One word or phrase per line. These stay exactly as written in every language, wherever they appear (brand names, product names, domain extensions, and so on). You can also add <code>class="notranslate"</code> or <code>translate="no"</code> to any element in your theme.</p>
+						<label><input type="checkbox" name="<?php echo $o; ?>[protect_prices]" value="1"<?php checked( 1, $s['protect_prices'] ); ?>> Keep prices untranslated (any text containing a $, &euro;, &pound; or &#8383; amount)</label>
 					</td></tr>
 
 					<tr><th scope="row">Advanced</th><td>

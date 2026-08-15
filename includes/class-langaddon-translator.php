@@ -53,6 +53,8 @@ class Langaddon_Translator {
 			'switcher'      => 'dropdown',        // dropdown | inline
 			'float'         => 0,                 // show floating switcher bottom-corner
 			'cache_head'    => 1,                 // translate <title> + meta description
+			'protect_terms' => '',                // words/phrases kept verbatim in every language (one per line)
+			'protect_prices'=> 0,                 // keep any text containing a currency amount untranslated
 		);
 	}
 
@@ -62,6 +64,59 @@ class Langaddon_Translator {
 
 	public static function hash( $text ) {
 		return sha1( trim( preg_replace( '/\s+/u', ' ', $text ) ) );
+	}
+
+	/** The do-not-translate list from settings, longest phrase first. */
+	public static function protected_terms() {
+		$s   = self::settings();
+		$raw = isset( $s['protect_terms'] ) ? (string) $s['protect_terms'] : '';
+		$out = array();
+		foreach ( preg_split( '/\r\n|\r|\n/', $raw ) as $line ) {
+			$line = trim( $line );
+			if ( $line !== '' ) { $out[] = $line; }
+		}
+		usort( $out, function ( $a, $b ) { return mb_strlen( $b ) - mb_strlen( $a ); } );
+		return $out;
+	}
+
+	/** True when a string should be left exactly as-is (a whole protected term, or a price when the guard is on). */
+	protected static function should_skip( $text, array $terms, $s ) {
+		$trim = trim( $text );
+		foreach ( $terms as $term ) {
+			if ( 0 === strcasecmp( $trim, $term ) ) { return true; }
+		}
+		if ( ! empty( $s['protect_prices'] ) && preg_match( '/[\$\x{20AC}\x{00A3}\x{20BF}]\s?\d/u', $text ) ) {
+			return true;
+		}
+		return false;
+	}
+
+	/** Replace protected terms with neutral tokens before sending text to a backend. */
+	protected static function mask_terms( $text, array $terms ) {
+		$mask = array();
+		if ( empty( $terms ) ) { return array( $text, $mask ); }
+		$i = 0;
+		foreach ( $terms as $term ) {
+			if ( $term === '' ) { continue; }
+			$token = '[[LAX' . $i . ']]';
+			$count = 0;
+			$text  = preg_replace_callback( '/' . preg_quote( $term, '/' ) . '/iu', function ( $m ) use ( &$mask, $token ) {
+				$mask[ $token ] = $m[0];
+				return $token;
+			}, $text, -1, $count );
+			if ( $count > 0 ) { $i++; }
+		}
+		return array( $text, $mask );
+	}
+
+	/** Put the original protected terms back after translation (tolerant of spacing/case the engine may add). */
+	protected static function unmask_terms( $text, array $mask ) {
+		foreach ( $mask as $token => $orig ) {
+			$num  = preg_replace( '/\D/', '', $token );
+			$text = preg_replace_callback( '/\[\[\s*LAX\s*' . $num . '\s*\]\]/i', function () use ( $orig ) { return $orig; }, $text );
+			$text = str_replace( $token, $orig, $text );
+		}
+		return $text;
 	}
 
 	/** Bulk cache lookup: returns [hash => translation] for the ones we already have. */
@@ -97,6 +152,7 @@ class Langaddon_Translator {
 	 */
 	public static function translate_batch( array $sources, $lang, $cap ) {
 		$s     = self::settings();
+		$terms = self::protected_terms();
 		$result = array();
 		$hashes = array();
 		foreach ( $sources as $src ) { $hashes[ $src ] = self::hash( $src ); }
@@ -109,10 +165,17 @@ class Langaddon_Translator {
 				$result[ $src ] = $cached[ $h ];
 				continue;
 			}
+			if ( self::should_skip( $src, $terms, $s ) ) {
+				self::store( $lang, $h, $src, $src );
+				$result[ $src ] = $src;
+				continue;
+			}
 			if ( $fetched >= $cap ) { $result[ $src ] = $src; continue; }
-			$t = self::provider_translate( $src, $s['source'], $lang, $s );
+			list( $masked, $mask ) = self::mask_terms( $src, $terms );
+			$t = self::provider_translate( $masked, $s['source'], $lang, $s );
 			$fetched++;
 			if ( $t !== null && $t !== '' ) {
+				$t = self::unmask_terms( $t, $mask );
 				self::store( $lang, $h, $src, $t );
 				$result[ $src ] = $t;
 			} else {
