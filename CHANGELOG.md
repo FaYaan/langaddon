@@ -2,6 +2,11 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.7] - 2026-08-16
+
+### Fixed
+- The target-language checkboxes now emit their `checked` state inline (like the dropdown's `selected()`), clearing the final Plugin Check output-escaping error. No functional changes.
+
 ## [1.1.6] - 2026-08-16
 
 ### Fixed

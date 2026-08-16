@@ -4,7 +4,7 @@ Tags: translation, multilingual, translate, language switcher, hreflang
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,9 @@ Depending on your choice, text is sent to one of these services:
 * DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
+= 1.1.7 =
+* Fixed: the target-language checkboxes emit their checked state inline, clearing the last Plugin Check output-escaping error. No functional changes.
+
 = 1.1.6 =
 * Fixed: escaped one settings-screen label flagged by Plugin Check. No functional changes.
 

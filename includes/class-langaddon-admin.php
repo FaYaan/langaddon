@@ -79,8 +79,8 @@ class Langaddon_Admin {
 						<div style="column-count:3;max-width:760px;">
 						<?php foreach ( $all as $code => $l ) {
 							if ( $code === $s['source'] ) { continue; }
-							$chk = checked( in_array( $code, (array) $s['targets'], true ), true, false );
-							printf( '<label style="display:block;"><input type="checkbox" name="%s[targets][]" value="%s"%s> %s <span style="color:#999;">%s%s</span></label>', esc_attr( $o ), esc_attr( $code ), $chk, esc_html( $l[1] ), esc_html( $code ), esc_html( $l[2] ? ' · RTL' : '' ) );
+							// Checkbox state is emitted inline in the echo below.
+							echo '<label style="display:block;"><input type="checkbox" name="' . esc_attr( $o ) . '[targets][]" value="' . esc_attr( $code ) . '"' . checked( in_array( $code, (array) $s['targets'], true ), true, false ) . '> ' . esc_html( $l[1] ) . ' <span style="color:#999;">' . esc_html( $code ) . esc_html( $l[2] ? ' · RTL' : '' ) . '</span></label>';
 						} ?>
 						</div>
 					</td></tr>
