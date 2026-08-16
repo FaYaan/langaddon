@@ -80,7 +80,7 @@ class Langaddon_Admin {
 						<?php foreach ( $all as $code => $l ) {
 							if ( $code === $s['source'] ) { continue; }
 							$chk = checked( in_array( $code, (array) $s['targets'], true ), true, false );
-							printf( '<label style="display:block;"><input type="checkbox" name="%s[targets][]" value="%s"%s> %s <span style="color:#999;">%s%s</span></label>', esc_attr( $o ), esc_attr( $code ), $chk, esc_html( $l[1] ), esc_html( $code ), $l[2] ? ' · RTL' : '' );
+							printf( '<label style="display:block;"><input type="checkbox" name="%s[targets][]" value="%s"%s> %s <span style="color:#999;">%s%s</span></label>', esc_attr( $o ), esc_attr( $code ), $chk, esc_html( $l[1] ), esc_html( $code ), esc_html( $l[2] ? ' · RTL' : '' ) );
 						} ?>
 						</div>
 					</td></tr>

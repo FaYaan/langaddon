@@ -2,6 +2,11 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.6] - 2026-08-16
+
+### Fixed
+- Escaped a settings-screen label (the RTL indicator) flagged by Plugin Check's output-escaping check. No functional changes.
+
 ## [1.1.5] - 2026-08-15
 
 ### Fixed
