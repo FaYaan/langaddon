@@ -4,7 +4,7 @@ Tags: translation, multilingual, translate, language switcher, hreflang
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,10 @@ Depending on your choice, text is sent to one of these services:
 * DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
+= 1.1.5 =
+* Fixed: the language switcher can now switch back to the source language (selecting it previously left the last language's cookie in place, so the page stayed translated).
+* Improved: on translated pages the Open Graph locale is now localised (for example de_DE, tr_TR, ar_AR) for better social-share previews.
+
 = 1.1.4 =
 * Added a Screenshots section to the readme. No code changes.
 

@@ -2,6 +2,14 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.5] - 2026-08-15
+
+### Fixed
+- The language switcher can now return to the source language. Selecting it used to leave the previously chosen language's cookie in place, so the page stayed translated.
+
+### Improved
+- On translated pages, the Open Graph `og:locale` is now localised (for example `de_DE`, `tr_TR`, `ar_AR`) so social-share previews match the page language.
+
 ## [1.1.4] - 2026-08-15
 
 ### Added

@@ -77,4 +77,22 @@ class Langaddon_Languages {
 		$map = array( 'pt-br' => 'pt-BR', 'pt-pt' => 'pt-PT', 'zh-cn' => 'zh-CN', 'zh-tw' => 'zh-TW', 'nb' => 'no' );
 		return isset( $map[ $code ] ) ? $map[ $code ] : $code;
 	}
+
+	/** Open Graph locale (e.g. de_DE) for a language code, for social-share previews. */
+	public static function og_locale( $code ) {
+		$map = array(
+			'en' => 'en_US', 'ar' => 'ar_AR', 'az' => 'az_AZ', 'bg' => 'bg_BG', 'bn' => 'bn_BD',
+			'ca' => 'ca_ES', 'cs' => 'cs_CZ', 'da' => 'da_DK', 'de' => 'de_DE', 'el' => 'el_GR',
+			'es' => 'es_ES', 'et' => 'et_EE', 'fa' => 'fa_IR', 'fi' => 'fi_FI', 'fr' => 'fr_FR',
+			'he' => 'he_IL', 'hi' => 'hi_IN', 'hr' => 'hr_HR', 'hu' => 'hu_HU', 'id' => 'id_ID',
+			'it' => 'it_IT', 'ja' => 'ja_JP', 'ko' => 'ko_KR', 'lt' => 'lt_LT', 'lv' => 'lv_LV',
+			'mk' => 'mk_MK', 'ms' => 'ms_MY', 'nb' => 'nb_NO', 'nl' => 'nl_NL', 'pl' => 'pl_PL',
+			'pt-br' => 'pt_BR', 'pt-pt' => 'pt_PT', 'ro' => 'ro_RO', 'ru' => 'ru_RU', 'sk' => 'sk_SK',
+			'sl' => 'sl_SI', 'sr' => 'sr_RS', 'sv' => 'sv_SE', 'th' => 'th_TH', 'tr' => 'tr_TR',
+			'uk' => 'uk_UA', 'vi' => 'vi_VN', 'zh-cn' => 'zh_CN', 'zh-tw' => 'zh_TW',
+		);
+		if ( isset( $map[ $code ] ) ) { return $map[ $code ]; }
+		$c = substr( $code, 0, 2 );
+		return $c ? $c . '_' . strtoupper( $c ) : '';
+	}
 }

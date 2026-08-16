@@ -155,6 +155,14 @@ class Langaddon_Frontend {
 			$c->nodeValue = add_query_arg( 'lang', $lang, $c->nodeValue );
 		}
 
+		// Localise the Open Graph locale (e.g. de_DE, tr_TR) so social-share previews match the language.
+		$og_locale = Langaddon_Languages::og_locale( $lang );
+		if ( $og_locale ) {
+			foreach ( $xpath->query( '//meta[@property="og:locale"]/@content' ) as $c ) {
+				$c->nodeValue = $og_locale;
+			}
+		}
+
 		$out = $dom->saveHTML();
 		$out = preg_replace( '/^<\?xml encoding="utf-8" \?>/', '', $out );
 		return $out ? $out : $html;
@@ -198,7 +206,7 @@ class Langaddon_Frontend {
 		if ( 'inline' === $style ) {
 			echo '<ul class="langaddon-switcher langaddon-switcher--inline notranslate">';
 			foreach ( $langs as $l ) {
-				$url = ( $l === $source ) ? remove_query_arg( 'lang', $base ) : add_query_arg( 'lang', $l, $base );
+				$url = add_query_arg( 'lang', $l, $base );
 				$cls = ( $l === $this->current ) ? 'is-active' : '';
 				printf( '<li class="%s"><a href="%s" hreflang="%s">%s</a></li>', esc_attr( $cls ), esc_url( $url ), esc_attr( $l ), esc_html( Langaddon_Languages::name( $l ) ) );
 			}
@@ -207,7 +215,7 @@ class Langaddon_Frontend {
 			echo '<div class="langaddon-switcher langaddon-switcher--dropdown notranslate">';
 			echo '<select onchange="if(this.value)window.location.href=this.value;" aria-label="' . esc_attr__( 'Choose language', 'langaddon' ) . '">';
 			foreach ( $langs as $l ) {
-				$url = ( $l === $source ) ? remove_query_arg( 'lang', $base ) : add_query_arg( 'lang', $l, $base );
+				$url = add_query_arg( 'lang', $l, $base );
 				// selected() is emitted inline in the option below.
 				echo '<option value="' . esc_url( $url ) . '"' . selected( $l, $this->current, false ) . '>' . esc_html( Langaddon_Languages::name( $l ) ) . '</option>';
 			}
