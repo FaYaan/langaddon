@@ -1,4 +1,4 @@
-# LangAddon: Free Website Translation for WordPress
+# LangAddon Multilingual Translation for WordPress
 
 Make any WordPress site multilingual **for free**. LangAddon machine-translates your pages into 40+ languages using **free, no-lock-in backends** (MyMemory or a self-hosted LibreTranslate, or your own Google/DeepL key), **caches every translation in your own database**, and lets you **edit any string**. Ships with a language switcher, right-to-left support and `hreflang` tags.
 

@@ -2,6 +2,14 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.8] - 2026-08-18
+
+### Changed
+- Renamed the plugin to "LangAddon Multilingual Translation" (the WordPress.org directory does not allow "Free" in a plugin name).
+
+### Fixed
+- Replaced a broken external-services link (MyMemory now points to its terms-and-conditions page), and the page-level output buffer is now closed explicitly on `shutdown` instead of relying on PHP to close it.
+
 ## [1.1.7] - 2026-08-16
 
 ### Fixed

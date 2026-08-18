@@ -9,6 +9,7 @@ class Langaddon_Frontend {
 
 	protected $current = 'en';
 	protected $settings;
+	protected $buffer_level = 0;
 
 	public function __construct() {
 		$this->settings = Langaddon_Translator::settings();
@@ -72,6 +73,16 @@ class Langaddon_Frontend {
 
 	public function start_buffer() {
 		ob_start( array( $this, 'translate_html' ) );
+		$this->buffer_level = ob_get_level();
+		// Explicitly close our buffer at shutdown so it is never left open for another component to mishandle.
+		add_action( 'shutdown', array( $this, 'close_buffer' ) );
+	}
+
+	/** Flush our page output buffer explicitly if it is still open at shutdown. */
+	public function close_buffer() {
+		if ( $this->buffer_level && ob_get_level() >= $this->buffer_level ) {
+			ob_end_flush();
+		}
 	}
 
 	public function translate_html( $html ) {

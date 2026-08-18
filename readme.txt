@@ -1,14 +1,14 @@
-=== LangAddon: Free Website Translation ===
+=== LangAddon Multilingual Translation ===
 Contributors: hostaddon
 Tags: translation, multilingual, translate, language switcher, hreflang
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Free, self-hosted multilingual for WordPress: translate your site into 40+ languages, cache them in your database, and edit any translation.
+Self-hosted multilingual for WordPress: translate your site into 40+ languages, cache them in your database, and edit any translation.
 
 == Description ==
 
@@ -58,12 +58,16 @@ To translate text, LangAddon sends the strings on the page being viewed to the t
 
 Depending on your choice, text is sent to one of these services:
 
-* MyMemory (default): sends the text to be translated, plus your email only if you add one to raise the free limit. Service by Translated. Docs and terms: https://mymemory.translated.net/doc/ , privacy: https://translated.com/privacy-policy/
+* MyMemory (default): sends the text to be translated, plus your email only if you add one to raise the free limit. Service by Translated. Terms and privacy: https://mymemory.translated.net/terms-and-conditions
 * LibreTranslate (optional): sends the text to the LibreTranslate server URL you configure, which may be your own self-hosted server or a public one. Project: https://libretranslate.com/ . Terms and privacy depend on the server you point to; self-hosting keeps all text on your own infrastructure.
 * Google Cloud Translation (optional): sends the text and your API key to Google. Terms: https://cloud.google.com/terms/ , privacy: https://policies.google.com/privacy
 * DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
+= 1.1.8 =
+* Renamed the plugin to "LangAddon Multilingual Translation".
+* Fixed a broken link in the external services list, and the page output buffer is now closed explicitly on shutdown.
+
 = 1.1.7 =
 * Fixed: the target-language checkboxes emit their checked state inline, clearing the last Plugin Check output-escaping error. No functional changes.
 
