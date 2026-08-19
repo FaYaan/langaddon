@@ -2,6 +2,11 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.9] - 2026-08-19
+
+### Changed
+- Removed the unprefixed `[language-switcher]` shortcode alias so every registered name uses the plugin's `langaddon` prefix, avoiding conflicts with other plugins or themes. Use `[langaddon_switcher]`.
+
 ## [1.1.8] - 2026-08-18
 
 ### Changed

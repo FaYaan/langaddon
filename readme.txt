@@ -4,7 +4,7 @@ Tags: translation, multilingual, translate, language switcher, hreflang
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,9 @@ Depending on your choice, text is sent to one of these services:
 * DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
+= 1.1.9 =
+* Removed the unprefixed [language-switcher] shortcode alias so every registered name uses the langaddon prefix. Use [langaddon_switcher].
+
 = 1.1.8 =
 * Renamed the plugin to "LangAddon Multilingual Translation".
 * Fixed a broken link in the external services list, and the page output buffer is now closed explicitly on shutdown.

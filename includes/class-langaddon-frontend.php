@@ -16,8 +16,6 @@ class Langaddon_Frontend {
 		$this->current  = $this->detect_language();
 
 		add_shortcode( 'langaddon_switcher', array( $this, 'switcher_shortcode' ) );
-		// Let themes that look for common switchers pick ours up too.
-		add_shortcode( 'language-switcher', array( $this, 'switcher_shortcode' ) );
 
 		add_filter( 'language_attributes', array( $this, 'language_attributes' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
