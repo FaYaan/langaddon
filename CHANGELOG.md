@@ -2,6 +2,14 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-08-22
+
+### Added
+- A "Settings" link now appears under the plugin on the Plugins screen (via `plugin_action_links`).
+
+### Changed
+- Rewrote the readme description, FAQ, and tags for clarity and WordPress.org discoverability. No functional changes to translation.
+
 ## [1.1.9] - 2026-08-19
 
 ### Changed

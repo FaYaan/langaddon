@@ -1,36 +1,48 @@
 === LangAddon Multilingual Translation ===
 Contributors: hostaddon
-Tags: translation, multilingual, translate, language switcher, hreflang
+Tags: translation, translate, multilingual, language switcher, localization
 Requires at least: 5.6
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.2
-Stable tag: 1.1.9
+Stable tag: 1.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Self-hosted multilingual for WordPress: translate your site into 40+ languages, cache them in your database, and edit any translation.
+Translate your WordPress site into 40+ languages with a language switcher. Free, self-hosted machine translation you can cache and edit.
 
 == Description ==
 
-LangAddon makes any WordPress site multilingual for free. It machine-translates your pages using free backends (MyMemory or a self-hosted LibreTranslate) or your own Google/DeepL key, caches every translation in your own database (so repeat views are instant and each string is translated only once), and lets you edit translations. Includes a language switcher, right-to-left support and hreflang tags.
+LangAddon is a free, self-hosted multilingual and translation plugin for WordPress. It automatically translates your website into 40+ languages, adds a language switcher, and stores every translation in your own database, so repeat views are instant and you can edit any translation by hand.
 
-You can also keep chosen words untranslated everywhere: brand names, product names, domain extensions, code, and optionally anything that contains a price. See the "Never translate" question below.
-
-No subscription. No third-party lock-in. Your translations stay in your database. Free for anyone to use, fork, and build on.
+Unlike widget-based translators, LangAddon translates on the server. Search engines see fully translated pages, with hreflang tags, translated titles and meta descriptions, self-referencing canonicals, and right-to-left (RTL) support built in.
 
 = Highlights =
-* 40+ languages including RTL (Arabic, Farsi, Hebrew)
-* Free backends (MyMemory, LibreTranslate) or your own Google/DeepL key
-* Self-hosted, cached, editable translations
-* Never-translate list for brand and product names, domains, and code, plus an optional price guard
-* Language switcher shortcode `[langaddon_switcher]`, floating widget, or theme slot
-* hreflang tags + translated title/meta description
+* Automatic machine translation into 40+ languages, including RTL (Arabic, Hebrew, Persian).
+* Free backends with no key: MyMemory, or a self-hosted LibreTranslate server.
+* Bring your own key: Google Cloud Translation or DeepL for higher quality and volume.
+* Self-hosted and cached: each string is translated once, stored in your database, and fully editable.
+* Language switcher: the [langaddon_switcher] shortcode, a floating widget, or your theme's switcher slot.
+* SEO-friendly: hreflang alternates, self-referencing canonical and og:url, translated title and meta description, and localized Open Graph locale.
+* Never-translate list: keep brand names, product names, domain extensions, code, and prices identical in every language.
+* No subscription, no per-word fees, no third-party lock-in. Your translations stay in your database.
+
+= How it works =
+
+On a non-default language, LangAddon captures the rendered HTML, translates the visible text via your chosen backend, caches the result in your database, and writes it back while preserving your markup. Cached strings are served instantly and never hit the translation service again. The first visit to a page translates a batch of strings and the rest fill in on later views, so no single request times out.
+
+= Supported translation services =
+
+Choose one backend in the settings:
+* MyMemory: free, no API key required (rate-limited; add an email to raise the limit).
+* LibreTranslate: free and open source, self-host it for unlimited private translation.
+* Google Cloud Translation: your own API key, wide language coverage.
+* DeepL: your own API key, high quality for major languages.
 
 == Installation ==
-1. Upload the plugin to `/wp-content/plugins/langaddon` or install the zip via Plugins → Add New → Upload.
-2. Activate.
-3. Go to Settings → LangAddon, choose your languages and a backend, and save.
-4. Add `[langaddon_switcher]` where you want the switcher, or enable the floating switcher.
+1. In your dashboard, go to Plugins, Add New, and search for "LangAddon", or upload the zip via Plugins, Add New, Upload.
+2. Activate the plugin.
+3. Go to Settings, LangAddon, choose your source language, the languages to translate into, and a backend, then save.
+4. Add the [langaddon_switcher] shortcode where you want the switcher, or enable the floating switcher.
 
 == Screenshots ==
 
@@ -40,21 +52,30 @@ No subscription. No third-party lock-in. Your translations stay in your database
 
 == Frequently Asked Questions ==
 
+= How do I translate my WordPress site? =
+Install and activate LangAddon, go to Settings, LangAddon, pick your source language and the languages to translate into, choose a backend (MyMemory needs no key), and save. Then add the [langaddon_switcher] shortcode or turn on the floating switcher so visitors can change language.
+
 = Is it really free? =
-Yes. The default MyMemory backend needs no key. For volume, self-host LibreTranslate (also free) or add your own Google/DeepL key.
+Yes. The default MyMemory backend needs no key. For volume, self-host LibreTranslate (also free) or add your own Google or DeepL key.
+
+= Which translation services are supported? =
+MyMemory (free, no key), a self-hosted LibreTranslate server, Google Cloud Translation, or DeepL (with your own API key).
+
+= Is this an alternative to paid multilingual plugins? =
+Yes. LangAddon gives you automatic translation, a language switcher, caching, and editable translations, self-hosted and free, without a subscription.
 
 = Can I stop certain words from being translated? =
-Yes. Under Settings → LangAddon → Never translate, add one word or phrase per line (brand names, product names, domain extensions like .org, and so on). They stay exactly as written in every language, even in the middle of a sentence. You can also turn on the price guard to leave any text containing a currency amount untranslated, or mark elements in your theme with class="notranslate" or translate="no".
+Yes. Under Settings, LangAddon, Never translate, add one word or phrase per line (brand names, product names, domain extensions like .org, and so on). They stay exactly as written in every language, even in the middle of a sentence. You can also turn on the price guard to leave any text containing a currency amount untranslated, or mark elements in your theme with class="notranslate" or translate="no".
 
-= Are translations good for SEO? =
-It outputs hreflang tags and translates titles/meta descriptions. Pretty sub-directory URLs are on the roadmap for stronger SEO.
+= Is it good for SEO? =
+Yes. LangAddon translates server-side and outputs hreflang alternates, a self-referencing canonical and og:url, translated title and meta description, and a localized Open Graph locale, so each language can be indexed on its own.
 
 = Can I edit a translation? =
 Yes, cached translations are stored in your database and can be edited (a front-end editor is on the roadmap).
 
 == External services ==
 
-To translate text, LangAddon sends the strings on the page being viewed to the translation backend you select in Settings → LangAddon. Nothing is sent until you choose a backend and a target language, and results are cached in your own database so each string is sent only once. No data is sent to HostAddon.
+To translate text, LangAddon sends the strings on the page being viewed to the translation backend you select in Settings, LangAddon. Nothing is sent until you choose a backend and a target language, and results are cached in your own database so each string is sent only once. No data is sent to HostAddon.
 
 Depending on your choice, text is sent to one of these services:
 
@@ -64,6 +85,10 @@ Depending on your choice, text is sent to one of these services:
 * DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
+= 1.2.0 =
+* New: a "Settings" link now appears under the plugin on the Plugins screen.
+* Improved: rewritten description, FAQ, and tags for clarity and discoverability. No functional changes to translation.
+
 = 1.1.9 =
 * Removed the unprefixed [language-switcher] shortcode alias so every registered name uses the langaddon prefix. Use [langaddon_switcher].
 

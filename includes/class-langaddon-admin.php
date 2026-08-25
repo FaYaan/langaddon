@@ -10,6 +10,14 @@ class Langaddon_Admin {
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 		add_action( 'admin_init', array( $this, 'register' ) );
 		add_action( 'admin_post_langaddon_clear', array( $this, 'clear_cache' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( LANGADDON_FILE ), array( $this, 'action_links' ) );
+	}
+
+	/** Add a Settings link under the plugin on the Plugins screen. */
+	public function action_links( $links ) {
+		$url = admin_url( 'options-general.php?page=langaddon' );
+		array_unshift( $links, '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'langaddon' ) . '</a>' );
+		return $links;
 	}
 
 	public function menu() {
