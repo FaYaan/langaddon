@@ -2,6 +2,11 @@
 
 All notable changes to LangAddon are documented here. LangAddon is free for anyone to use, fork, and build on. This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] - 2026-08-25
+
+### Added
+- WooCommerce support: the AJAX cart and checkout fragments (`woocommerce_add_to_cart_fragments` and `woocommerce_update_order_review_fragments`) are now translated, so the mini-cart and checkout order review update in the visitor's language. Prices are left untouched. Block-based (Store API) cart/checkout and WooCommerce emails are not covered yet.
+
 ## [1.2.0] - 2026-08-22
 
 ### Added

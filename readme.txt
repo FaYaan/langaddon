@@ -4,7 +4,7 @@ Tags: translation, translate, multilingual, language switcher, localization
 Requires at least: 5.6
 Tested up to: 7.1
 Requires PHP: 7.2
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,7 @@ Unlike widget-based translators, LangAddon translates on the server. Search engi
 * Language switcher: the [langaddon_switcher] shortcode, a floating widget, or your theme's switcher slot.
 * SEO-friendly: hreflang alternates, self-referencing canonical and og:url, translated title and meta description, and localized Open Graph locale.
 * Never-translate list: keep brand names, product names, domain extensions, code, and prices identical in every language.
+* WooCommerce-aware: cart and checkout AJAX fragments (mini-cart and order review) are translated too, and prices stay untouched.
 * No subscription, no per-word fees, no third-party lock-in. Your translations stay in your database.
 
 = How it works =
@@ -61,6 +62,9 @@ Yes. The default MyMemory backend needs no key. For volume, self-host LibreTrans
 = Which translation services are supported? =
 MyMemory (free, no key), a self-hosted LibreTranslate server, Google Cloud Translation, or DeepL (with your own API key).
 
+= Does it work with WooCommerce? =
+Yes. Shop, product, cart, and checkout pages translate like any other page, and the AJAX mini-cart and checkout order-review fragments are translated too, so dynamic updates stay in the right language. Prices are left untouched. The block-based (Store API) cart and checkout, and WooCommerce emails, are not translated yet.
+
 = Is this an alternative to paid multilingual plugins? =
 Yes. LangAddon gives you automatic translation, a language switcher, caching, and editable translations, self-hosted and free, without a subscription.
 
@@ -85,6 +89,9 @@ Depending on your choice, text is sent to one of these services:
 * DeepL (optional): sends the text and your API key to DeepL. Terms: https://www.deepl.com/pro-license , privacy: https://www.deepl.com/privacy
 
 == Changelog ==
+= 1.3.0 =
+* New: WooCommerce support. The AJAX mini-cart and checkout order-review fragments are now translated, so they update in the visitor's language. Prices stay untouched.
+
 = 1.2.0 =
 * New: a "Settings" link now appears under the plugin on the Plugins screen.
 * Improved: rewritten description, FAQ, and tags for clarity and discoverability. No functional changes to translation.

@@ -17,6 +17,10 @@ class Langaddon_Frontend {
 
 		add_shortcode( 'langaddon_switcher', array( $this, 'switcher_shortcode' ) );
 
+		// WooCommerce: translate AJAX cart and checkout fragments (mini-cart, order review).
+		add_filter( 'woocommerce_add_to_cart_fragments', array( $this, 'translate_cart_fragments' ) );
+		add_filter( 'woocommerce_update_order_review_fragments', array( $this, 'translate_cart_fragments' ) );
+
 		add_filter( 'language_attributes', array( $this, 'language_attributes' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'assets' ) );
 		add_action( 'wp_head', array( $this, 'hreflang' ), 1 );
@@ -81,6 +85,64 @@ class Langaddon_Frontend {
 		if ( $this->buffer_level && ob_get_level() >= $this->buffer_level ) {
 			ob_end_flush();
 		}
+	}
+
+	/** WooCommerce: translate AJAX cart and checkout fragments so dynamic updates match the current language. */
+	public function translate_cart_fragments( $fragments ) {
+		if ( ! is_array( $fragments ) || $this->current === $this->settings['source'] || empty( $this->targets() ) ) {
+			return $fragments;
+		}
+		foreach ( $fragments as $key => $html ) {
+			if ( is_string( $html ) && '' !== trim( $html ) ) {
+				$fragments[ $key ] = $this->translate_fragment( $html );
+			}
+		}
+		return $fragments;
+	}
+
+	/** Translate the visible text in a partial HTML fragment, cached like full pages. */
+	public function translate_fragment( $html ) {
+		if ( ! class_exists( 'DOMDocument' ) || '' === trim( $html ) ) { return $html; }
+		$lang = $this->current;
+		$prev = libxml_use_internal_errors( true );
+		$dom  = new DOMDocument();
+		$dom->loadHTML( '<?xml encoding="utf-8" ?><div id="langaddon-frag">' . $html . '</div>', LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		libxml_clear_errors();
+		libxml_use_internal_errors( $prev );
+
+		$xpath = new DOMXPath( $dom );
+		$wrap  = $xpath->query( '//*[@id="langaddon-frag"]' )->item( 0 );
+		if ( ! $wrap ) { return $html; }
+
+		$skip = 'not(ancestor::script) and not(ancestor::style) and not(ancestor::code) '
+			. 'and not(ancestor-or-self::*[@translate="no"]) '
+			. 'and not(ancestor-or-self::*[contains(concat(" ",normalize-space(@class)," ")," notranslate ")])';
+		$nodes = $xpath->query( './/text()[' . $skip . ']', $wrap );
+
+		$key_of = function( $value ) {
+			$t = trim( preg_replace( '/\s+/u', ' ', $value ) );
+			if ( $t === '' || mb_strlen( $t ) > 4000 ) { return ''; }
+			if ( ! preg_match( '/\p{L}/u', $t ) ) { return ''; }
+			return $t;
+		};
+
+		$uniq = array();
+		foreach ( $nodes as $n ) { $k = $key_of( $n->nodeValue ); if ( $k !== '' ) { $uniq[ $k ] = true; } }
+		if ( empty( $uniq ) ) { return $html; }
+
+		$map = Langaddon_Translator::translate_batch( array_keys( $uniq ), $lang, count( $uniq ) );
+		foreach ( $nodes as $n ) {
+			$orig = $n->nodeValue;
+			$key  = $key_of( $orig );
+			if ( $key === '' || ! isset( $map[ $key ] ) ) { continue; }
+			$lead  = preg_match( '/^\s+/u', $orig, $m1 ) ? $m1[0] : '';
+			$trail = preg_match( '/\s+$/u', $orig, $m2 ) ? $m2[0] : '';
+			$n->nodeValue = $lead . $map[ $key ] . $trail;
+		}
+
+		$out = '';
+		foreach ( $wrap->childNodes as $c ) { $out .= $dom->saveHTML( $c ); }
+		return ( '' !== $out ) ? $out : $html;
 	}
 
 	public function translate_html( $html ) {
